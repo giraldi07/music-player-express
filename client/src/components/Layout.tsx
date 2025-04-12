@@ -21,8 +21,9 @@ const Layout = ({ children }: LayoutProps) => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
         <Navbar />
         <main className={cn(
+          "transition-all duration-300 ease-in-out", 
           "pb-20", // Default padding for the mini player
-          isMobile && "pb-36" // Extra padding on mobile for bottom nav + mini player
+          isMobile ? "pb-36 pt-0" : "pt-0 md:pt-4 md:pl-64", // Adjustments for mobile/sidebar layout
         )}>
           {children}
         </main>
