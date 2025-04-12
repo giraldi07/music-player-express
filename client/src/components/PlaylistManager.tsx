@@ -12,11 +12,11 @@ export default function PlaylistManager() {
   };
   
   return (
-    <section className="w-full md:w-1/2 lg:w-2/5 bg-white rounded-xl shadow-md overflow-hidden">
+    <section className="music-card w-full md:w-1/2 lg:w-2/5">
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-semibold text-gray-800">Playlist</h2>
-          <div className="text-sm text-gray-500">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Playlist</h2>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             {tracks.length} {tracks.length === 1 ? 'track' : 'tracks'}
           </div>
         </div>
@@ -35,11 +35,11 @@ export default function PlaylistManager() {
           ) : (
             // Empty State
             <div className="py-12 text-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
               </svg>
-              <h3 className="text-gray-500 text-lg font-medium mb-1">No tracks yet</h3>
-              <p className="text-gray-400">Select music files to add to your playlist</p>
+              <h3 className="text-gray-500 dark:text-gray-400 text-lg font-medium mb-1">No tracks yet</h3>
+              <p className="text-gray-400 dark:text-gray-500">Select music files to add to your playlist</p>
             </div>
           )}
         </div>
@@ -49,7 +49,7 @@ export default function PlaylistManager() {
           <div className="mt-6 flex justify-end">
             <Button 
               variant="ghost" 
-              className="text-sm text-gray-500 hover:text-error transition-colors flex items-center"
+              className="text-sm text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors flex items-center"
               onClick={handleClearPlaylist}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

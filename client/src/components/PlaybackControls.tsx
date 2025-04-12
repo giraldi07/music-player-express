@@ -35,7 +35,9 @@ export default function PlaybackControls() {
         variant="ghost"
         className={cn(
           "p-2 rounded-full transition-colors",
-          isShuffled ? "text-primary bg-indigo-50" : "text-gray-500 hover:text-primary hover:bg-gray-100"
+          isShuffled 
+            ? "text-primary bg-indigo-50 dark:bg-indigo-900/30" 
+            : "text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-foreground hover:bg-gray-100 dark:hover:bg-gray-800"
         )}
         onClick={handleToggleShuffle}
       >
@@ -48,7 +50,7 @@ export default function PlaybackControls() {
       <Button 
         size="icon"
         variant="ghost"
-        className="p-3 rounded-full text-gray-700 hover:text-primary hover:bg-gray-100 transition-colors"
+        className="p-3 rounded-full text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-foreground hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         onClick={handlePreviousTrack}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,7 +60,7 @@ export default function PlaybackControls() {
       
       {/* Play/Pause */}
       <Button 
-        className="p-4 rounded-full bg-primary hover:bg-secondary text-white shadow-md transition transform hover:scale-105"
+        className="p-4 rounded-full bg-primary hover:bg-primary/90 text-white dark:text-primary-foreground shadow-md transition transform hover:scale-105"
         onClick={handlePlayPause}
       >
         {isPlaying ? (
@@ -77,7 +79,7 @@ export default function PlaybackControls() {
       <Button 
         size="icon"
         variant="ghost"
-        className="p-3 rounded-full text-gray-700 hover:text-primary hover:bg-gray-100 transition-colors"
+        className="p-3 rounded-full text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-foreground hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         onClick={handleNextTrack}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -91,7 +93,9 @@ export default function PlaybackControls() {
         variant="ghost"
         className={cn(
           "p-2 rounded-full transition-colors",
-          repeatMode !== 'none' ? "text-primary bg-indigo-50" : "text-gray-500 hover:text-primary hover:bg-gray-100"
+          repeatMode !== 'none' 
+            ? "text-primary bg-indigo-50 dark:bg-indigo-900/30" 
+            : "text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-foreground hover:bg-gray-100 dark:hover:bg-gray-800"
         )}
         onClick={handleToggleRepeat}
       >

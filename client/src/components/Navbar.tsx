@@ -15,15 +15,15 @@ function NavLink({ href, children, className }: NavLinkProps) {
   
   return (
     <Link href={href}>
-      <a className={cn(
-        "px-4 py-2 rounded-md font-medium transition-colors",
+      <span className={cn(
+        "px-4 py-2 rounded-md font-medium transition-colors cursor-pointer",
         isActive 
           ? "bg-primary text-white dark:bg-primary dark:text-primary-foreground" 
           : "text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800",
         className
       )}>
         {children}
-      </a>
+      </span>
     </Link>
   );
 }

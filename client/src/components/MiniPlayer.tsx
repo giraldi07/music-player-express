@@ -38,14 +38,14 @@ export default function MiniPlayer() {
         {/* Track Info */}
         <div className="flex-grow min-w-0 mr-4">
           <Link href="/">
-            <a className="block">
+            <span className="block cursor-pointer">
               <p className="font-medium text-sm truncate text-gray-900 dark:text-gray-100">
                 {currentTrack.title}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                 {currentTrack.artist} {currentTrack.album ? `• ${currentTrack.album}` : ''}
               </p>
-            </a>
+            </span>
           </Link>
         </div>
         
@@ -64,7 +64,7 @@ export default function MiniPlayer() {
             className={cn(
               "p-2 rounded-full",
               isPlaying 
-                ? "bg-primary text-white" 
+                ? "bg-primary text-white dark:text-primary-foreground" 
                 : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200"
             )}
             onClick={handlePlayPause}
