@@ -5,11 +5,13 @@ import { useAudioPlayer } from '@/hooks/useAudioPlayer';
 import PlaybackControls from './PlaybackControls';
 import CDAnimation from './CDAnimation';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export default function CurrentTrackPlayer() {
   const { state, dispatch, currentTrack } = usePlayer();
   const { currentTime, duration, volume, isMuted } = state;
   const { seekByPercentage } = useAudioPlayer();
+  const isMobile = useIsMobile();
   
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const percent = parseFloat(e.target.value);
@@ -29,24 +31,39 @@ export default function CurrentTrackPlayer() {
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
   
   return (
-    <section className="music-card w-full md:w-1/2 lg:w-3/5">
-      <div className="p-6 flex flex-col h-full">
+    <section className="music-card w-full lg:w-3/5 transition-all duration-300">
+      <div className="p-4 sm:p-6 flex flex-col h-full">
         {/* Currently Playing */}
-        <div className="flex flex-col items-center justify-center flex-grow py-6">
+        <div className="flex flex-col items-center justify-center flex-grow py-4 sm:py-6">
           {/* Album Art / CD Animation / No Track Selected */}
           {currentTrack ? (
-            <div className="mb-8">
+            <div className={cn(
+              "mb-6 transition-all duration-300",
+              isMobile ? "scale-90" : "mb-8"
+            )}>
               <CDAnimation />
             </div>
           ) : (
-            <div className="relative mb-8 rounded-lg shadow-lg overflow-hidden w-48 h-48 md:w-64 md:h-64">
+            <div className={cn(
+              "relative rounded-lg shadow-lg overflow-hidden transition-all duration-300",
+              isMobile ? "w-40 h-40" : "w-48 h-48 md:w-64 md:h-64 mb-8"
+            )}>
               <div className="absolute inset-0 bg-gray-800 dark:bg-gray-700 bg-opacity-70 flex items-center justify-center">
-                <div className="text-center p-6">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-gray-300 dark:text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="text-center p-4 sm:p-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" className={cn(
+                    "mx-auto text-gray-300 dark:text-gray-400 mb-3 sm:mb-4 transition-all duration-300",
+                    isMobile ? "h-12 w-12" : "h-16 w-16"
+                  )} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                   </svg>
-                  <p className="text-white dark:text-gray-200 text-lg font-medium">No track selected</p>
-                  <p className="text-gray-300 dark:text-gray-400 mt-2">Select music files to begin playback</p>
+                  <p className={cn(
+                    "text-white dark:text-gray-200 font-medium",
+                    isMobile ? "text-base" : "text-lg"
+                  )}>No track selected</p>
+                  <p className={cn(
+                    "text-gray-300 dark:text-gray-400",
+                    isMobile ? "text-xs mt-1" : "text-sm mt-2"
+                  )}>Select music files to begin playback</p>
                 </div>
               </div>
             </div>
@@ -55,19 +72,24 @@ export default function CurrentTrackPlayer() {
           {/* Track Info */}
           <div className="text-center">
             <h2 className={cn(
-              "text-xl font-bold mb-1",
+              "font-bold mb-1 transition-all duration-300",
+              isMobile ? "text-lg" : "text-xl",
               currentTrack ? "text-gray-800 dark:text-gray-100" : "text-gray-500 dark:text-gray-400"
             )}>
               {currentTrack?.title || 'No Track Selected'}
             </h2>
             <h3 className={cn(
-              "text-lg mb-2",
+              "mb-1 transition-all duration-300",
+              isMobile ? "text-base" : "text-lg",
               currentTrack ? "text-gray-600 dark:text-gray-300" : "text-gray-400 dark:text-gray-500"
             )}>
               {currentTrack?.artist || 'Select a track to play'}
             </h3>
             {currentTrack?.album && (
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className={cn(
+                "text-gray-500 dark:text-gray-400 transition-all duration-300",
+                isMobile ? "text-xs" : "text-sm"
+              )}>
                 {currentTrack.album}
               </p>
             )}
@@ -75,8 +97,8 @@ export default function CurrentTrackPlayer() {
         </div>
         
         {/* Progress Bar */}
-        <div className="mt-6">
-          <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
+        <div className="mt-4 sm:mt-6">
+          <div className="flex justify-between text-gray-500 dark:text-gray-400 mb-1 transition-all duration-300 text-xs sm:text-sm">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
@@ -85,7 +107,7 @@ export default function CurrentTrackPlayer() {
             min="0" 
             max="100" 
             value={progressPercentage} 
-            className="w-full" 
+            className="w-full cursor-pointer" 
             onChange={handleSeek}
           />
         </div>
@@ -93,8 +115,11 @@ export default function CurrentTrackPlayer() {
         {/* Player Controls */}
         <PlaybackControls />
         
-        {/* Volume Control */}
-        <div className="flex items-center space-x-2 mt-6">
+        {/* Volume Control - Hide on mobile for simplicity */}
+        <div className={cn(
+          "flex items-center space-x-2 mt-4 sm:mt-6",
+          isMobile && "hidden sm:flex" // Hide on mobile, show on sm and up
+        )}>
           {/* Mute/Unmute Button */}
           <button 
             className="p-1 rounded-full text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-foreground hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -123,7 +148,7 @@ export default function CurrentTrackPlayer() {
             min="0" 
             max="100" 
             value={volume * 100} 
-            className="w-full max-w-xs" 
+            className="w-full max-w-xs cursor-pointer" 
             onChange={handleVolumeChange}
           />
         </div>
