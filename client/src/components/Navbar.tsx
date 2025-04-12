@@ -3,6 +3,7 @@ import { Link, useLocation } from 'wouter';
 import ThemeToggle from './ThemeToggle';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import LogosImage from '../assets/music-player.png';
 
 type NavLinkProps = {
   href: string;
@@ -114,26 +115,11 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-16">
             {/* Left: Logo and Title */}
             <div className="flex items-center space-x-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24">
-                <defs>
-                  <linearGradient id="modernGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#4f46e5" /> {/* indigo-600 */}
-                    <stop offset="100%" stopColor="#9333ea" /> {/* purple-600 */}
-                  </linearGradient>
-                  <filter id="shadow3d" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="#000" floodOpacity="0.3" />
-                  </filter>
-                </defs>
-                <path
-                  d="M20 4a1 1 0 00-1.2-.98l-12 2A1 1 0 006 6v9.5A3.5 3.5 0 005 15c-1.66 0-3 .9-3 2s1.34 2 3 2 3-.9 3-2V9l10-2v5.5A3.5 3.5 0 0015 12c-1.66 0-3 .9-3 2s1.34 2 3 2 3-.9 3-2V4z"
-                  fill="url(#modernGradient)"
-                  filter="url(#shadow3d)"
-                  stroke="#fff"
-                  strokeWidth="0.5"
+                <img
+                  src={LogosImage}
+                  alt="Logo"
+                  className="h-8 w-8 object-contain"
                 />
-              </svg>
-
-              
             </div>
             
             {/* Right: Theme Toggle */}
@@ -183,13 +169,7 @@ export default function Navbar() {
         </NavLink>
       </div>
       
-      {/* Overlay for sidebar on tablet */}
-      {/* {sidebarOpen && !isMobile && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-10 transition-opacity lg:hidden"
-          onClick={toggleSidebar}
-        />
-      )} */}
+
 
       {/* Main content padding - This should wrap your page content */}
       <div className={cn(
