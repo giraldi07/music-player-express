@@ -28,97 +28,9 @@ const NowPlaying = () => {
               "font-bold text-gray-900 dark:text-gray-100 transition-all duration-300",
               isMobile ? "text-xl" : "text-2xl"
             )}>Now Playing</h1>
-            {/* <Button 
-              variant="outline" 
-              size={isMobile ? "sm" : "default"}
-              onClick={toggleShortcutsGuide}
-              className={cn(
-                "transition-all duration-300",
-                isMobile ? "text-xs" : "text-sm"
-              )}
-            >
-              {showShortcuts ? 'Hide Shortcuts' : 'Keyboard Shortcuts'}
-            </Button> */}
           </div>
-          
-          {/* <div className="mt-3 sm:mt-0">
-            <FileUploadButton />
-          </div> */}
         </div>
         
-        {/* Keyboard Shortcuts Guide */}
-        {showShortcuts && (
-          <div className={cn(
-            "bg-white dark:bg-gray-800 rounded-lg shadow-md mb-4 sm:mb-6 transition-all duration-300",
-            isMobile ? "p-3" : "p-4"
-          )}>
-            <h3 className={cn(
-              "font-medium text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 transition-all duration-300",
-              isMobile ? "text-base" : "text-lg"
-            )}>Keyboard Shortcuts</h3>
-            <div className={cn(
-              "grid gap-2 sm:gap-3 transition-all duration-300",
-              isMobile ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
-            )}>
-              <div className="flex items-center">
-                <span className="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 font-mono mr-2 text-xs sm:text-sm">Space</span>
-                <span className={cn(
-                  "text-gray-700 dark:text-gray-300 transition-all duration-300",
-                  isMobile ? "text-xs" : "text-sm"
-                )}>Play/Pause</span>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 font-mono mr-2 text-xs sm:text-sm">←</span>
-                <span className={cn(
-                  "text-gray-700 dark:text-gray-300 transition-all duration-300",
-                  isMobile ? "text-xs" : "text-sm"
-                )}>Previous Track</span>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 font-mono mr-2 text-xs sm:text-sm">→</span>
-                <span className={cn(
-                  "text-gray-700 dark:text-gray-300 transition-all duration-300",
-                  isMobile ? "text-xs" : "text-sm"
-                )}>Next Track</span>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 font-mono mr-2 text-xs sm:text-sm">↑</span>
-                <span className={cn(
-                  "text-gray-700 dark:text-gray-300 transition-all duration-300",
-                  isMobile ? "text-xs" : "text-sm"
-                )}>Volume Up</span>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 font-mono mr-2 text-xs sm:text-sm">↓</span>
-                <span className={cn(
-                  "text-gray-700 dark:text-gray-300 transition-all duration-300",
-                  isMobile ? "text-xs" : "text-sm"
-                )}>Volume Down</span>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 font-mono mr-2 text-xs sm:text-sm">M</span>
-                <span className={cn(
-                  "text-gray-700 dark:text-gray-300 transition-all duration-300",
-                  isMobile ? "text-xs" : "text-sm"
-                )}>Mute/Unmute</span>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 font-mono mr-2 text-xs sm:text-sm">S</span>
-                <span className={cn(
-                  "text-gray-700 dark:text-gray-300 transition-all duration-300",
-                  isMobile ? "text-xs" : "text-sm"
-                )}>Toggle Shuffle</span>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 font-mono mr-2 text-xs sm:text-sm">R</span>
-                <span className={cn(
-                  "text-gray-700 dark:text-gray-300 transition-all duration-300",
-                  isMobile ? "text-xs" : "text-sm"
-                )}>Toggle Repeat</span>
-              </div>
-            </div>
-          </div>
-        )}
         
         {/* Main content area */}
         <div className={cn(

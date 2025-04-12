@@ -126,7 +126,6 @@ export default function Songs() {
             </svg>
             <h3 className="text-gray-500 dark:text-gray-400 text-lg font-medium mb-1">No songs yet</h3>
             <p className="text-gray-400 dark:text-gray-500 mb-4">Upload music files to view your song list</p>
-            <FileUploadButton />
           </div>
         )}
       </div>
