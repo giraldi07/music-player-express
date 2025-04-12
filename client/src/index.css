@@ -8,6 +8,57 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased bg-background text-foreground transition-colors duration-200;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+}
+
+@layer components {
+  .cd-container {
+    @apply relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden bg-gradient-to-br from-gray-200 to-white dark:from-gray-800 dark:to-gray-900;
+  }
+  
+  .cd-container::before {
+    content: '';
+    @apply absolute inset-0 rounded-full border-[20px] border-gray-800 opacity-70 z-10 dark:border-gray-200 dark:opacity-30;
+  }
+  
+  .cd-container::after {
+    content: '';
+    @apply absolute inset-0 m-auto w-16 h-16 rounded-full bg-gradient-to-br from-gray-500 to-gray-300 dark:from-gray-700 dark:to-gray-500 z-20;
+  }
+  
+  .cd-label {
+    @apply absolute inset-0 flex items-center justify-center z-10 text-xl font-bold text-gray-800 dark:text-gray-200;
+  }
+
+  /* Custom styling for range inputs */
+  input[type="range"] {
+    @apply appearance-none h-2 rounded-full bg-gray-200 dark:bg-gray-700;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    @apply appearance-none w-4 h-4 rounded-full bg-primary cursor-pointer hover:bg-secondary transition-colors;
+  }
+  
+  /* Dark mode card styles */
+  .music-card {
+    @apply bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden transition-colors duration-200;
+  }
+
+  /* Playlist item style */
+  .playlist-item {
+    @apply flex items-center p-3 mb-2 rounded-lg transition-colors cursor-pointer;
+  }
+  
+  .playlist-item-active {
+    @apply bg-indigo-50 border border-primary dark:bg-gray-700 dark:border-indigo-500;
+  }
+  
+  .playlist-item-inactive {
+    @apply hover:bg-gray-50 dark:hover:bg-gray-700;
   }
 }
