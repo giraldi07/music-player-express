@@ -6,11 +6,13 @@ import FileUploadButton from '@/components/FileUploadButton';
 import MiniPlayer from '@/components/MiniPlayer';
 import { usePlayer } from '@/context/PlayerContext';
 import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
 
-export default function NowPlaying() {
+const NowPlaying = () => {
   const { state } = usePlayer();
   const { tracks } = state;
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const isMobile = useIsMobile();
   
   const toggleShortcutsGuide = () => {
     setShowShortcuts(prev => !prev);
@@ -18,7 +20,7 @@ export default function NowPlaying() {
   
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header section */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-6">
           <div className="flex items-center space-x-4">
@@ -106,4 +108,6 @@ export default function NowPlaying() {
       <MiniPlayer />
     </Layout>
   );
-}
+};
+
+export default NowPlaying;

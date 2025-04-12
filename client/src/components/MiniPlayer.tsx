@@ -3,10 +3,12 @@ import { usePlayer } from '@/context/PlayerContext';
 import { formatTime } from '@/lib/audioPlayer';
 import { Link } from 'wouter';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export default function MiniPlayer() {
   const { state, dispatch, currentTrack } = usePlayer();
   const { isPlaying, currentTime, duration } = state;
+  const isMobile = useIsMobile();
   
   if (!currentTrack) return null;
   
@@ -25,7 +27,10 @@ export default function MiniPlayer() {
   };
   
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 p-2 z-50">
+    <div className={cn(
+      "fixed left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 p-2 z-50",
+      isMobile ? "bottom-16" : "bottom-0" // Adjust position for mobile to accommodate the bottom nav bar
+    )}>
       {/* Progress bar */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700">
         <div 
