@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import Navbar from './Navbar';
 import { useTheme } from '@/context/ThemeContext';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 
 interface LayoutProps {
   children: ReactNode;
@@ -8,6 +9,9 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const { theme } = useTheme();
+  
+  // Enable keyboard shortcuts
+  useKeyboardShortcuts();
   
   return (
     <div className={theme === 'dark' ? 'dark' : ''}>

@@ -6,51 +6,54 @@ export function useKeyboardShortcuts() {
   
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Skip if we're in an input element
-      if (
-        document.activeElement?.tagName === 'INPUT' ||
-        document.activeElement?.tagName === 'TEXTAREA'
-      ) {
+      // Don't trigger shortcuts if user is typing in an input/textarea
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
         return;
       }
       
-      switch (e.code) {
-        case 'Space':
-          e.preventDefault(); // Prevent page scroll
-          dispatch({ type: 'TOGGLE_PLAY' });
-          break;
-          
-        case 'ArrowLeft':
-          dispatch({ type: 'PREVIOUS_TRACK' });
-          break;
-          
-        case 'ArrowRight':
-          dispatch({ type: 'NEXT_TRACK' });
-          break;
-          
-        case 'ArrowUp':
-          e.preventDefault(); // Prevent page scroll
-          const newVolumeUp = Math.min(1, state.volume + 0.1);
-          dispatch({ type: 'SET_VOLUME', payload: newVolumeUp });
-          break;
-          
-        case 'ArrowDown':
-          e.preventDefault(); // Prevent page scroll
-          const newVolumeDown = Math.max(0, state.volume - 0.1);
-          dispatch({ type: 'SET_VOLUME', payload: newVolumeDown });
-          break;
-          
-        case 'KeyM':
-          dispatch({ type: 'TOGGLE_MUTE' });
-          break;
-          
-        case 'KeyS':
-          dispatch({ type: 'TOGGLE_SHUFFLE' });
-          break;
-          
-        case 'KeyR':
-          dispatch({ type: 'TOGGLE_REPEAT' });
-          break;
+      // Space: Play/Pause
+      if (e.code === 'Space') {
+        e.preventDefault(); // Prevent scrolling
+        dispatch({ type: 'TOGGLE_PLAY' });
+      }
+      
+      // Right Arrow: Next Track
+      if (e.code === 'ArrowRight') {
+        dispatch({ type: 'NEXT_TRACK' });
+      }
+      
+      // Left Arrow: Previous Track
+      if (e.code === 'ArrowLeft') {
+        dispatch({ type: 'PREVIOUS_TRACK' });
+      }
+      
+      // M: Mute/Unmute
+      if (e.code === 'KeyM') {
+        dispatch({ type: 'TOGGLE_MUTE' });
+      }
+      
+      // S: Toggle Shuffle
+      if (e.code === 'KeyS') {
+        dispatch({ type: 'TOGGLE_SHUFFLE' });
+      }
+      
+      // R: Toggle Repeat
+      if (e.code === 'KeyR') {
+        dispatch({ type: 'TOGGLE_REPEAT' });
+      }
+      
+      // Volume Up: Up Arrow
+      if (e.code === 'ArrowUp') {
+        e.preventDefault(); // Prevent scrolling
+        const newVolume = Math.min(state.volume + 0.1, 1);
+        dispatch({ type: 'SET_VOLUME', payload: newVolume });
+      }
+      
+      // Volume Down: Down Arrow
+      if (e.code === 'ArrowDown') {
+        e.preventDefault(); // Prevent scrolling
+        const newVolume = Math.max(state.volume - 0.1, 0);
+        dispatch({ type: 'SET_VOLUME', payload: newVolume });
       }
     };
     
@@ -59,5 +62,5 @@ export function useKeyboardShortcuts() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [state.volume, dispatch]);
+  }, [dispatch, state.volume]);
 }
