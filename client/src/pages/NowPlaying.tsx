@@ -5,19 +5,15 @@ import PlaylistManager from '@/components/PlaylistManager';
 import FileUploadButton from '@/components/FileUploadButton';
 import MiniPlayer from '@/components/MiniPlayer';
 import { usePlayer } from '@/context/PlayerContext';
-import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
 const NowPlaying = () => {
   const { state } = usePlayer();
   const { tracks } = state;
-  const [showShortcuts, setShowShortcuts] = useState(false);
+  const [showShortcuts] = useState(false);
   const isMobile = useIsMobile();
   
-  const toggleShortcutsGuide = () => {
-    setShowShortcuts(prev => !prev);
-  };
   
   return (
     <Layout>
@@ -32,7 +28,7 @@ const NowPlaying = () => {
               "font-bold text-gray-900 dark:text-gray-100 transition-all duration-300",
               isMobile ? "text-xl" : "text-2xl"
             )}>Now Playing</h1>
-            <Button 
+            {/* <Button 
               variant="outline" 
               size={isMobile ? "sm" : "default"}
               onClick={toggleShortcutsGuide}
@@ -42,12 +38,12 @@ const NowPlaying = () => {
               )}
             >
               {showShortcuts ? 'Hide Shortcuts' : 'Keyboard Shortcuts'}
-            </Button>
+            </Button> */}
           </div>
           
-          <div className="mt-3 sm:mt-0">
+          {/* <div className="mt-3 sm:mt-0">
             <FileUploadButton />
-          </div>
+          </div> */}
         </div>
         
         {/* Keyboard Shortcuts Guide */}
@@ -161,6 +157,14 @@ const NowPlaying = () => {
             <FileUploadButton />
           </div>
         )}
+
+        <div className="flex flex-col items-center p-4 space-y-2">
+          <h3>{`Total Tracks: ${tracks.length}`}</h3>
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} Giraldi Prama Yudistira. All rights reserved.
+          </p>
+        </div>
+
       </div>
       
       <MiniPlayer />

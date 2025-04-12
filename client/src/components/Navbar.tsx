@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import ThemeToggle from './ThemeToggle';
 import { cn } from '@/lib/utils';
@@ -70,10 +70,17 @@ export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const isMobile = useIsMobile();
   
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-  
+
+  // Close sidebar when switching to mobile view
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarOpen(false);
+    } else {
+      // Always show sidebar on desktop
+      setSidebarOpen(true);
+    }
+  }, [isMobile]);
+
   // Icons for navigation
   const icons = {
     nowPlaying: (
@@ -101,32 +108,36 @@ export default function Navbar() {
   
   return (
     <>
-      {/* Top Navigation Bar */}
-      <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Top Navigation Bar - Fixed at the top */}
+      <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800 z-30 fixed top-0 left-0 right-0">
+        <div className="max-w-full mx-auto px-4">
           <div className="flex justify-between items-center h-16">
             {/* Left: Logo and Title */}
             <div className="flex items-center space-x-2">
-              {/* Hamburger menu button for tablet/desktop */}
-              {!isMobile && (
-                <button 
-                  onClick={toggleSidebar}
-                  className="mr-2 p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </button>
-              )}
-              
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24">
+                <defs>
+                  <linearGradient id="modernGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#4f46e5" /> {/* indigo-600 */}
+                    <stop offset="100%" stopColor="#9333ea" /> {/* purple-600 */}
+                  </linearGradient>
+                  <filter id="shadow3d" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="#000" floodOpacity="0.3" />
+                  </filter>
+                </defs>
+                <path
+                  d="M20 4a1 1 0 00-1.2-.98l-12 2A1 1 0 006 6v9.5A3.5 3.5 0 005 15c-1.66 0-3 .9-3 2s1.34 2 3 2 3-.9 3-2V9l10-2v5.5A3.5 3.5 0 0015 12c-1.66 0-3 .9-3 2s1.34 2 3 2 3-.9 3-2V4z"
+                  fill="url(#modernGradient)"
+                  filter="url(#shadow3d)"
+                  stroke="#fff"
+                  strokeWidth="0.5"
+                />
               </svg>
-              <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">Offline Music Player</h1>
+
+              
             </div>
             
             {/* Right: Theme Toggle */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-end space-x-4">
               <ThemeToggle />
             </div>
           </div>
@@ -135,16 +146,16 @@ export default function Navbar() {
       
       {/* Desktop/Tablet Sidebar */}
       <div className={cn(
-        "fixed left-0 top-16 bottom-0 w-64 bg-white dark:bg-gray-900 shadow-lg border-r border-gray-200 dark:border-gray-800 z-30 transition-transform duration-300 ease-in-out transform md:translate-x-0",
-        sidebarOpen ? "translate-x-0" : "-translate-x-full",
-        isMobile && "hidden" // Hide on mobile
+        "fixed left-0 top-16 bottom-0 w-64 bg-white dark:bg-gray-900 shadow-lg border-r border-gray-200 dark:border-gray-800 z-20 transition-transform duration-300 ease-in-out",
+        isMobile ? "hidden" : "lg:translate-x-0",
+        sidebarOpen ? "translate-x-0" : "-translate-x-full"
       )}>
-        <div className="flex flex-col h-full py-4">
-          <div className="px-4 mb-6">
+        <div className="flex flex-col h-full overflow-y-auto">
+          <div className="px-4 pt-4 pb-2">
             <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Menu</h2>
           </div>
           
-          <div className="flex-1 space-y-1 px-3">
+          <div className="flex-1 space-y-1 px-3 pb-4">
             <NavLink href="/" sidebar={true} icon={icons.nowPlaying}>Now Playing</NavLink>
             <NavLink href="/songs" sidebar={true} icon={icons.songs}>All Songs</NavLink>
             <NavLink href="/albums" sidebar={true} icon={icons.albums}>Albums</NavLink>
@@ -155,49 +166,39 @@ export default function Navbar() {
       
       {/* Mobile Bottom Navigation Bar */}
       <div className={cn(
-        "md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 z-40 h-16 flex justify-around items-center px-2",
-        !isMobile && "hidden" // Hide on tablet/desktop
+        "lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 z-30 h-16 flex justify-around items-center px-2",
+        !isMobile && "hidden"
       )}>
-        <NavLink 
-          href="/" 
-          isMobile={true} 
-          icon={icons.nowPlaying}
-        >
+        <NavLink href="/" isMobile={true} icon={icons.nowPlaying}>
           Now Playing
         </NavLink>
-        
-        <NavLink 
-          href="/songs" 
-          isMobile={true} 
-          icon={icons.songs}
-        >
+        <NavLink href="/songs" isMobile={true} icon={icons.songs}>
           Songs
         </NavLink>
-        
-        <NavLink 
-          href="/albums" 
-          isMobile={true} 
-          icon={icons.albums}
-        >
+        <NavLink href="/albums" isMobile={true} icon={icons.albums}>
           Albums
         </NavLink>
-        
-        <NavLink 
-          href="/favorites" 
-          isMobile={true} 
-          icon={icons.favorites}
-        >
+        <NavLink href="/favorites" isMobile={true} icon={icons.favorites}>
           Favorites
         </NavLink>
       </div>
       
-      {/* Overlay for sidebar on tablet/desktop */}
-      {sidebarOpen && !isMobile && (
+      {/* Overlay for sidebar on tablet */}
+      {/* {sidebarOpen && !isMobile && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-20"
+          className="fixed inset-0 bg-black bg-opacity-50 z-10 transition-opacity lg:hidden"
           onClick={toggleSidebar}
         />
-      )}
+      )} */}
+
+      {/* Main content padding - This should wrap your page content */}
+      <div className={cn(
+        "pt-16", 
+        !isMobile ? "lg:pl-64" : "pl-0",
+        sidebarOpen && !isMobile ? "pl-64" : "pl-0"
+      )}>
+        {/* Your page content will be rendered here */}
+      </div>
     </>
   );
 }
